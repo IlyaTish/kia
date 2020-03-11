@@ -445,9 +445,23 @@ h1, h2, h3, h4, h5
   margin: 0
   color: #000000
   font-size: 52px
-  @include NeoSansPro-Bold
+  font-weight: 100
+  @include KIAOTFB
   @media (max-width: 767px)
     font-size: 40px
+
+.input
+  width: 100%
+  height: 42px
+  padding: 0 10px
+  color: #000000
+  font-size: 14px
+  border: 1px solid #DADADA
+  box-sizing: border-box
+  outline: none
+  transition: .2s
+  &:focus
+    border: 1px solid $main
 
 .btn
   width: 100%
@@ -483,6 +497,21 @@ h1, h2, h3, h4, h5
 
   @media (max-width: 1199px)
     max-width: 220px
+
+.btn-close
+  width: 20px
+  height: 20px
+  top: 10px
+  right: 10px
+  position: absolute
+  padding: 0
+  border: none
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoLjcwODMgLS43MDU5MSAuNzA4MyAuNzA1OTEgMS45NDYgMTgpIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTAtMWgyMi42NjYiLz48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCguNzA4MyAuNzA1OTEgLS43MDgzIC43MDU5MSAxIDIpIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTAtMWgyMi42NjYiLz48L3N2Zz4=")
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: 16px
+  outline: none
+  cursor: pointer
 
 
 /* Checkbox styles
