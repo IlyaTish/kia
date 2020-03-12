@@ -6,7 +6,8 @@ const btn        = document.querySelector('.btn'),
       popup      = document.querySelector('.popup'),
       popups     = document.querySelectorAll('.popup'),
       popupLinks = document.querySelectorAll('.popup-link'),
-      popupCont  = document.querySelector('.popup__cont');
+      popupCont  = document.querySelector('.popup__cont'),
+      input      = document.querySelector('.phone-mask');
 
 
 // Document ready function
@@ -60,12 +61,46 @@ const popupFunc = () => {
 }
 
 
-function initYandexMapWaitOnHover() {
-  function loadScript(url, callback) {
-    var script = document.createElement('script');
+function setCursorPosition(pos, elem) {
+  elem.focus();
+
+  if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
+
+  else if (elem.createTextRange) {
+    const range = elem.createTextRange();
+    range.collapse(true);
+    range.moveEnd('character', pos);
+    range.moveStart('character', pos);
+    range.select();
+  }
+}
+
+function mask(event) {
+  let matrix = '+7 (___) ___ __ __',
+      i = 0,
+      def = matrix.replace(/\D/g, ''),
+      val = this.value.replace(/\D/g, '');
+
+  if (def.length >= val.length) val = def;
+
+  this.value = matrix.replace(/./g, (a) => {
+    return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a
+  });
+
+  if (event.type == 'blur') {
+    if (this.value.length == 2) this.value = ''
+  } else setCursorPosition(this.value.length, this)
+};
+
+
+
+
+const initYandexMapWaitOnHover = () => {
+  const loadScript = (url, callback) => {
+    const script = document.createElement('script');
 
     if (script.readyState) {
-      script.onreadystatechange = function() {
+      script.onreadystatechange = () => {
         if (script.readyState == 'loaded' ||
           script.readyState == 'complete') {
           script.onreadystatechange = null;
@@ -73,7 +108,7 @@ function initYandexMapWaitOnHover() {
         }
       };
     } else {
-      script.onload = function() {
+      script.onload = () => {
         callback();
       };
     }
@@ -82,13 +117,13 @@ function initYandexMapWaitOnHover() {
     document.getElementsByTagName('head')[0].appendChild(script);
   }
 
-  var check_if_load = 0;
+  let check_if_load = 0;
 
-  function __load_yandex() {
-    if (check_if_load == 0) {
+  const __load_yandex = () => {
+    if (check_if_load === 0) {
       check_if_load = 1;
       //animationDuration
-      loadScript("https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;loadByRequire=1", function() {
+      loadScript('https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;loadByRequire=1', () => {
         ymaps.load(initYandexMap);
       });
     }
@@ -103,28 +138,25 @@ function initYandexMapWaitOnHover() {
   document.querySelector('#map').addEventListener('click', () => {
     __load_yandex();
   });
-  document.querySelector('#map').addEventListener('load', () => {
-    __load_yandex();
-  });
 }
 
 
-function initYandexMap() {
-  ymaps.ready(function() {
-    var _ball_bg = './assets/images/map-balloon.svg';
-    var _ball_Offset = [-26, -43];
-    var _ball_Size = [31, 43];
+const initYandexMap = () => {
+  ymaps.ready(() => {
+    const _ball_bg = './assets/images/map-balloon.svg',
+          _ball_Offset = [-26, -43],
+          _ball_Size = [31, 43];
 
-    var myMap = new ymaps.Map('map', {
-      center: [60.006635778210416, 30.366376995467448],
-      zoom: 12,
+    const myMap = new ymaps.Map('map', {
+      center: [60.01498402133191, 30.404198842514205],
+      zoom: 13,
       controls: ['zoomControl']
     }, {
       searchControlProvider: 'yandex#search'
     });
 
     //baloon 1
-    var placemark = new ymaps.Placemark([60.025385564052776, 30.434275], {
+    const placemark = new ymaps.Placemark([60.025385564052776, 30.434275], {
       balloonContent: '<b>Автопродикс KIA</b><br>Санкт-Петербург, ул. Руставели, 55к1',
       hintContent: 'Автопродикс KIA'
     }, {
@@ -147,4 +179,8 @@ function initYandexMap() {
 ready(() => {
   popupFunc();
   initYandexMapWaitOnHover();
+
+  input.addEventListener('input', mask, false);
+  input.addEventListener('focus', mask, false);
+  input.addEventListener('blur', mask, false);
 });
