@@ -1,0 +1,65 @@
+.timer
+  top: -80px
+  position: relative
+  .container
+    display: flex
+    justify-content: center
+
+  &__cont
+    margin: 0 auto
+    padding: 48px 76px 54px 76px
+    display: flex
+    position: relative
+    font-weight: 100
+    text-align: center
+    background: #FAFAFA
+    box-sizing: border-box
+
+  &__text
+    padding-top: 5px
+    display: block
+    font-size: 18px
+    @include KIAOTFM
+    font-weight: 200
+    text-transform: uppercase
+
+.timer-num
+  min-width: 64px
+  display: flex
+  justify-content: space-evenly
+
+  &:after
+    height: 100%
+    margin: 0 10px
+    content: ':'
+    display: inline-block
+    color: #000000
+    font-size: 50px
+    text-align: center
+
+  &__col
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.timer-time
+  width: 100%
+  display: flex
+  justify-content: center
+  font-size: 50px
+  @include KIAOTFB
+  text-align: center
+  box-sizing: border-box
+
+.car-to-finish
+  width: 488px
+  left: 30px
+  bottom: -13px
+  position: absolute
+
+  img
+    width: 100%
+
+.no-pseudo
+  &:after, &:before
+    display: none !important

@@ -61,40 +61,50 @@ const popupFunc = () => {
 }
 
 
-function setCursorPosition(pos, elem) {
-  elem.focus();
+// Timer function
+function getTimeRemaining(endtime) {
+  const t       = Date.parse(endtime) - Date.parse(new Date()),
+        seconds = Math.floor((t / 1000) % 60),
+        minutes = Math.floor((t / 1000 / 60) % 60),
+        hours   = Math.floor((t / (1000 * 60 * 60)) % 24),
+        days    = Math.floor(t / (1000 * 60 * 60 * 24));
 
-  if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);
-
-  else if (elem.createTextRange) {
-    const range = elem.createTextRange();
-    range.collapse(true);
-    range.moveEnd('character', pos);
-    range.moveStart('character', pos);
-    range.select();
-  }
+  return {
+    'total':   t,
+    'days':    days,
+    'hours':   hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
 }
 
-function mask(event) {
-  let matrix = '+7 (___) ___ __ __',
-      i = 0,
-      def = matrix.replace(/\D/g, ''),
-      val = this.value.replace(/\D/g, '');
+// Timer initialization
+function initializeClock(id, endtime) {
+  const clock       = document.getElementById(id),
+        daysSpan    = clock.querySelector('.days'),
+        hoursSpan   = clock.querySelector('.hours'),
+        minutesSpan = clock.querySelector('.minutes'),
+        secondsSpan = clock.querySelector('.seconds');
 
-  if (def.length >= val.length) val = def;
+  function updateClock() {
+    const t = getTimeRemaining(endtime);
 
-  this.value = matrix.replace(/./g, (a) => {
-    return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? '' : a
-  });
+    daysSpan.innerHTML    = ('0' + t.days).slice(-2);
+    hoursSpan.innerHTML   = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
-  if (event.type == 'blur') {
-    if (this.value.length == 2) this.value = ''
-  } else setCursorPosition(this.value.length, this)
-};
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  const timeinterval = setInterval(updateClock, 1000);
+}
 
 
-
-
+// Yandex map onEvent
 const initYandexMapWaitOnHover = () => {
   const loadScript = (url, callback) => {
     const script = document.createElement('script');
@@ -141,6 +151,7 @@ const initYandexMapWaitOnHover = () => {
 }
 
 
+// Init yandex map
 const initYandexMap = () => {
   ymaps.ready(() => {
     const _ball_bg = './assets/images/map-balloon.svg',
@@ -180,7 +191,14 @@ ready(() => {
   popupFunc();
   initYandexMapWaitOnHover();
 
-  input.addEventListener('input', mask, false);
-  input.addEventListener('focus', mask, false);
-  input.addEventListener('blur', mask, false);
+
+  const maskOptions = {
+    mask: '+{7} (000) 000-00-00'
+  };
+
+  const mask = IMask(input, maskOptions)
+
+
+  const deadline = new Date(Date.parse(new Date()) + 3 * 24 * 60 * 60 * 1000);
+  initializeClock('countdown', deadline);
 });
