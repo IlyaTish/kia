@@ -1,13 +1,15 @@
 /* Functions */
 
 // Variables
-const btn        = document.querySelector('.btn'),
-      btns       = document.querySelectorAll('.btn'),
-      popup      = document.querySelector('.popup'),
-      popups     = document.querySelectorAll('.popup'),
-      popupLinks = document.querySelectorAll('.popup-link'),
-      popupCont  = document.querySelector('.popup__cont'),
-      input      = document.querySelector('.phone-mask');
+const btn         = document.querySelector('.btn'),
+      btns        = document.querySelectorAll('.btn'),
+      submitBtn   = document.querySelector('.submit-btn'),
+      popup       = document.querySelector('.popup'),
+      popupThanks = document.querySelector('.popup-thanks'),
+      popups      = document.querySelectorAll('.popup'),
+      popupLinks  = document.querySelectorAll('.popup-link'),
+      popupCont   = document.querySelector('.popup__cont'),
+      input       = document.querySelector('.phone-mask');
 
 
 // Document ready function
@@ -18,19 +20,25 @@ const ready = (callback) => {
 
 
 const popupFunc = () => {
-  document.addEventListener('click', (e) => {
-    const isClickInside = popupCont.contains(e.target);
-
-    if (!isClickInside && popup.classList.contains('active')) {
-      popup.classList.remove('active');
-    }
-  });
-
   const popupsId   = [],
         btnHrefs   = [];
 
   [].forEach.call(popups, (popupElem) => {
     popupsId.push(popupElem.getAttribute('id'));
+
+    document.addEventListener('click', (e) => {
+      const isClickInside = popupCont.contains(e.target);
+
+      if (!isClickInside && popupElem.classList.contains('active')) {
+        popupElem.classList.remove('active');
+      }
+    });
+
+    popupElem.addEventListener('submit', (e) => {
+      e.preventDefault();
+      popupElem.classList.remove('active');
+      popupThanks.classList.add('active');
+    });
   });
 
   [].forEach.call(popupLinks, (link) => {
