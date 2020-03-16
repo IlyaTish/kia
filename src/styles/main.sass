@@ -1,0 +1,206 @@
+@import './normalize'
+@import './dom'
+@import './fonts'
+
+/* Variables */
+
+// Colors
+$main: #BB162B
+
+.bold
+  font-family: 'KIAOTFB', sans-serif
+
+
+/* Mixins */
+@mixin KIAOTFB
+  font-family: 'KIAOTFB', sans-serif
+
+@mixin KIAOTFM
+  font-family: 'KIAOTFM', sans-serif
+
+@mixin KIAOTFL
+  font-family: 'KIAOTFL', sans-serif
+
+
+@mixin NeoSansPro-Bold
+  font-family: 'NeoSansPro-Bold', sans-serif
+
+@mixin NeoSansPro-Medium
+  font-family: 'NeoSansPro-Regular', sans-serif
+
+@mixin NeoSansPro-Light
+  font-family: 'NeoSansPro-Light', sans-serif
+
+
+.container
+  width: 100%
+  max-width: 1260px
+  margin-left: auto
+  margin-right: auto
+  padding: 0 20px
+  box-sizing: border-box
+  @media (max-width: 767px)
+    padding: 0 16px
+
+.wrapper
+  min-height: 100%
+  display: flex
+  flex-direction: column
+
+.content
+  flex: 1 0 auto
+  position: relative
+
+.footer
+  flex: 0 0 auto
+
+// Headings
+h1, h2, h3, h4, h5
+  margin: 0
+  color: #000000
+  font-size: 52px
+  font-weight: 100
+  @include KIAOTFB
+  @media (max-width: 767px)
+    font-size: 40px
+
+.input
+  width: 100%
+  height: 42px
+  padding: 0 10px
+  color: #000000
+  font-size: 14px
+  border: 1px solid #DADADA
+  box-sizing: border-box
+  outline: none
+  transition: .2s
+  &::placeholder
+    color: #58595B
+  &:focus
+    border: 1px solid $main
+
+.btn
+  width: 100%
+  max-width: 264px
+  padding: 11px 10px
+  display: flex
+  align-items: center
+  justify-content: center
+  color: #FFFFFF
+  font-size: 16px
+  text-decoration: none
+  background-color: $main
+  border: none
+  box-sizing: border-box
+  cursor: pointer
+  white-space: nowrap
+  transition: .2s
+  &:hover
+    background: darken($main, 14%)
+
+  &--gray
+    background: #7E8083
+    &:hover
+      color: #FFFFFF
+      background: darken(#7E8083, 14%)
+
+  &--empty
+    color: #494949
+    border: 1px solid #7E8083
+    background: transparent
+    &:hover
+      color: #FFFFFF
+      background: darken(#7E8083, 14%)
+
+  @media (max-width: 1199px)
+    max-width: 220px
+
+.btn-close
+  width: 20px
+  height: 20px
+  top: 10px
+  right: 10px
+  position: absolute
+  padding: 0
+  border: none
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMTgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggdHJhbnNmb3JtPSJtYXRyaXgoLjcwODMgLS43MDU5MSAuNzA4MyAuNzA1OTEgMS45NDYgMTgpIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTAtMWgyMi42NjYiLz48cGF0aCB0cmFuc2Zvcm09Im1hdHJpeCguNzA4MyAuNzA1OTEgLS43MDgzIC43MDU5MSAxIDIpIiBzdHJva2U9IiMwMDAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgZD0iTTAtMWgyMi42NjYiLz48L3N2Zz4=")
+  background-position: center center
+  background-repeat: no-repeat
+  background-size: 16px
+  outline: none
+  cursor: pointer
+
+.conditions-link
+  width: 100%
+  display: inline-block
+  color: $main
+  font-size: 10px
+  text-align: center
+
+
+/* Checkbox styles
+   ========================================================================== */
+
+.agreement
+  display: flex
+  justify-content: flex-start
+
+  .privacy-link
+    color: #FFFFFF
+    text-decoration: underline
+    transition: .2s
+    &:hover
+      color: $main
+      text-decoration: none
+
+.checkbox
+  vertical-align: top
+  width: 16px
+  height: 16px
+  margin: 0 3px 0 0
+
+.checkbox + label
+  display: flex
+  align-items: center
+  color: #FFFFFF
+  font-size: 8px
+  cursor: pointer
+
+.checkbox:not(checked)
+  position: absolute
+  z-index: -1
+  opacity: 0
+  margin: 10px 0 0 20px
+
+.checkbox:not(checked) + label
+  position: relative
+  padding: 0 0 0 14px
+
+.checkbox:not(checked) + label:before
+  width: 9px
+  height: 9px
+  content: ''
+  top: -2px
+  left: 0
+  position: absolute
+  border-radius: 2px
+  background: #5399F5
+  transition: .2s
+
+.checkbox:not(checked) + label:after
+  content: ''
+  width: 9px
+  height: 9px
+  position: absolute
+  top: -2px
+  left: 0px
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNyIgaGVpZ2h0PSI3IiB2aWV3Qm94PSIwIDAgNyA3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMSAzLjU5MDkxTDMuMTg3NSA1LjVMNi41IDEiIHN0cm9rZT0id2hpdGUiLz4KPC9zdmc+Cg==') no-repeat
+  background-position: center center
+  opacity: 0
+  transition: .2s
+
+.checkbox:checked + label:before
+  background: #5399F5
+
+.checkbox:checked + label:after
+  opacity: 1
