@@ -1,6 +1,6 @@
 set -e
 
-npm run build
+yarn run build
 
 cd dist
 
