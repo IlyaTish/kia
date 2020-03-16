@@ -70,7 +70,7 @@ const popupFunc = () => {
 
 
 // Timer function
-function getTimeRemaining(endtime) {
+const getTimeRemaining = (endtime) => {
   const t       = Date.parse(endtime) - Date.parse(new Date()),
         seconds = Math.floor((t / 1000) % 60),
         minutes = Math.floor((t / 1000 / 60) % 60),
@@ -86,8 +86,9 @@ function getTimeRemaining(endtime) {
   };
 }
 
+
 // Timer initialization
-function initializeClock(id, endtime) {
+const initializeClock = (id, endtime) => {
   const clock       = document.getElementById(id),
         daysSpan    = clock.querySelector('.days'),
         hoursSpan   = clock.querySelector('.hours'),
@@ -199,13 +200,8 @@ ready(() => {
   popupFunc();
   initYandexMapWaitOnHover();
 
-
-  const maskOptions = {
-    mask: '+{7} (000) 000-00-00'
-  };
-
-  const mask = IMask(input, maskOptions)
-
+  const maskOptions = { mask: '+{7} (000) 000-00-00' };
+  const mask = IMask(input, maskOptions);
 
   const deadline = new Date(Date.parse(new Date()) + 3 * 24 * 60 * 60 * 1000);
   initializeClock('countdown', deadline);
